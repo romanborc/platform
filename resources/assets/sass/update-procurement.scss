@@ -1,0 +1,172 @@
+.one-procurement p.area {
+    color: #7d848c;
+    font-size: 14px;
+}
+
+.one-procurement .header a.btn-flat {
+    margin-top: 18px;
+}
+
+.one-procurement a.delete-procurements {
+    margin-left: 10px;
+}
+
+.one-procurement .procurements .procurements-box {
+    border-top: 1px solid #dde2e9;
+    padding-top: 23px;
+    width: 90%;
+}
+
+.one-procurement .procurements .sections {
+    margin-bottom: 80px;
+}
+
+.one-procurement .procurements .sections.comment {
+    margin-bottom: 100px;
+    margin-top: 60px;
+}
+
+.one-procurement .procurements .info {
+    box-shadow: 4px 0px 3px -1px rgba(226, 226, 226, 0.1);
+    border-right: 1px solid #edeef1;
+}
+
+.one-procurement .procurements .info .span12 {
+    margin-left: 0;
+}
+
+.one-procurement .procurements .info h6 {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.one-procurement .procurements .info p {
+    color: #777e86;
+}
+
+.one-procurement .procurements .info textarea {
+    width: 97%;
+    margin-bottom: 13px;
+    height: 80px;
+}
+
+.one-procurement .procurements .info .submit-box {
+    text-align: right;
+}
+
+.one-procurement .procurements .info .submit-box input.btn-flat {
+    font-weight: 500;
+}
+
+.one-procurement .procurements .info .submit-box span {
+    text-transform: uppercase;
+    color: #7e91aa;
+    font-weight: 600;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 2px 0 8px;
+}
+
+.one-procurement .procurements .info .submit-box input.reset {
+    color: #7e91aa;
+    font-weight: 500;
+}
+
+.one-procurement .history h6 {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+
+.one-procurement .history iframe {
+    width: 90%;
+    margin-bottom: 30px;
+    float: right;
+    border: 0px;
+}
+
+.one-procurement .history ul {
+    padding: 0;
+    margin-left: 30px;
+    list-style: none;
+}
+
+.one-procurement .history ul li {
+    font-size: 13px;
+    line-height: 21px;
+}
+
+.one-procurement .history ul li.ico-li {
+    margin: 7px 0 7px;
+}
+
+.one-procurement .history ul i {
+    display: inline-block;
+    position: relative;
+    top: 4px;
+    margin-right: 7px;
+}
+
+.one-procurement .history ul i.ico-mail {
+    margin-right: 5px;
+}
+
+
+/* responsive */
+
+@media (min-width: 768px) and (max-width: 979px) {
+    .one-procurement .history ul {
+        margin-left: 18px;
+    }
+    .one-procurement .history ul i {
+        display: none;
+    }
+    .one-procurement .history ul li.ico-li {
+        font-weight: bold;
+    }
+    .one-procurement .history ul li.ico-li a {
+        font-weight: normal;
+    }
+}
+
+@media (max-width: 768px) {
+    .one-procurement .procurement .info {
+        border-right: 0 none;
+        border-bottom: 1px solid #edeef1;
+        box-shadow: 0px 4px 3px -1px rgba(226, 226, 226, 0.1);
+    }
+    .one-procurement .procurement .info .span12 {
+        width: auto;
+    }
+    .one-procurement .procurement .procurement-box {
+        width: 100%;
+    }
+    .one-procurement .history {
+        margin-top: 44px;
+    }
+    .one-procurement .history iframe {
+        width: 100%;
+    }
+    .one-procurement .history h6 {
+        margin-left: 0;
+    }
+    .one-procurement .history ul {
+        margin: 0;
+    }
+    .one-procurement .header a.btn-flat {
+        margin: 0;
+    }
+    .one-procurement .header a.edit {
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .one-procurement .header a.btn-flat {
+        margin: 0;
+    }
+    .one-procurement .header a.edit {
+        margin-right: 10px;
+    }
+}

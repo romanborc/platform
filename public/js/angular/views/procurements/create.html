@@ -1,0 +1,114 @@
+<div class="content">
+    <div id="pad-wrapper" class="new-proc">
+        <div class="row head">
+            <div class="col-md-12">
+                <h3>Создать новую закупку</h3>
+            </div>
+        </div>
+        <div class="row form-wrapper">
+            <div class="col-md-9 with-sidebar">
+                <form class="form-horizontal" name="platform">
+                    <div class="form-group">
+                        <label for="customer" class="col-md-2 control-label">Заказчик</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="customer" id="customer" placeholder="Заказчик" ng-model="procurement.customer" required>
+                            <p class="form-error" ng-show="platform.customer.$error.required">Поле не должно быть пустым</p>
+                            <span class="help-inline" ng-show="response.errors.customer[0]" ng-bind="response.errors.customer[0]"></span>
+                            <div class="alert alert-danger" ng-show="response.errors.customer[0]" ng-bind="response.errors.customer[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_procurement" class="col-md-2 control-label">Номер Закупки</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" name="id_procurement" id="id_procurement" ng-model="procurement.id_procurement" ui-mask="AA-9999-99-99-999999-A" model-view-value="true" ui-mask-placeholder-char="_" required>
+                            <p class="form-error" ng-show="platform.id_procurement.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.id_procurement[0]" ng-bind="response.errors.id_procurement[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="offers_period_end" class="col-md-2 control-label">Подать до</label>
+                        <div class="col-md-8">
+                            <input type="datetime" class="form-control" name="offers_period_end" id="offers_period_end" ui-mask="99-99-9999 99:99" placeholder="DD-MM-YYYY HH:MM" model-view-value="true" ui-mask-placeholder-char="_" required ng-model="procurement.offers_period_end">
+                            <p class="form-error" ng-show="platform.offers_period_end.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.offers_period_end[0]" ng-bind="response.errors.offers_period_end[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="auction_period_end" class="col-md-2 control-label">Время аукциона</label>
+                        <div class="col-md-8">
+                            <input type="datetime" class="form-control" name="auction_period_end" id="auction_period_end" ui-mask="99-99-9999 99:99" ui-mask-placeholder-char="-" placeholder="DD-MM-YYYY HH:MM" required ng-model="procurement.auction_period_end">
+                            <p class="form-error" ng-show="platform.auction_period_end.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.auction_period_end[0]" ng-bind="response.errors.auction_period_end[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-md-2 control-label">Ожидаемая стоимость</label>
+                        <div class="col-md-8">
+                            <input type="number" step="any" class="form-control" name="amount" id="amount" placeholder="Ожидаемая стоимость" required ng-model="procurement.amount">
+                            <p class="form-error" ng-show="platform.amount.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.amount[0]" ng-bind="response.errors.amount[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="users_id" class="col-md-2 control-label">Ответственный Менеджер</label>
+                        <div class="col-md-8">
+                            <select name="users_id" id="users_id" class="form-control" ng-model="procurement.users_id">
+                                <option value="" label="Выбери Менеджера..." selected="selected"></option>
+                                <option ng-repeat="item in users" value="[[ item.id ]]">[[ item.name ]]</option>
+                            </select>
+                            <p class="form-error" ng-show="platform.users_id.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.users_id[0]" ng-bind="response.errors.users_id[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="subjects_id" class="col-md-2 control-label">Предмет Закупки</label>
+                        <div class="col-md-8">
+                            <select name="subjects_id" id="subjects_id" class="form-control" required ng-model="procurement.subjects_id">
+                                <option value="" label="Выбери предмет Закупки..." disabled selected="selected"></option>
+                                <option value="[[ item.id ]]" ng-repeat="item in subjects" selected="selected">[[ item.subject ]]</option>
+                            </select>
+                            <p class="form-error" ng-show="platform.subjects_id.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.subjects_id[0]" ng-bind="response.errors.subjects_id[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="type_procurement" class="col-md-2 control-label">Тип Закупки</label>
+                        <div class="col-md-8">
+                            <select name="types_id" id="types_id" class="form-control" required ng-model="procurement.types_id">
+                                <option value="" label="Выбери тип Закупки..." disabled selected="selected"></option>
+                                <option value="[[ item.id ]]" ng-repeat="item in types" selected="selected">[[ item.type ]]</option>
+                            </select>
+                            <p class="form-error" ng-show="platform.subjects_id.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.subjects_id[0]" ng-bind="response.errors.subjects_id[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="identifier" class="col-md-2 control-label">Код ЕДРПО</label>
+                        <div class="col-md-8">
+                            <input type="number" step="any" class="form-control" name="identifier" id="identifier" placeholder="Код ЕДРПО" ng-model="procurement.identifier">
+                            <p class="form-error" ng-show="platform.identifier.$error.required">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger" ng-show="response.errors.identifier[0]" ng-bind="response.errors.identifier[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-md-2 control-label">Описание</label>
+                        <div class="col-md-8">
+                            <textarea class="form-control" name="description" id="description" placeholder="Описание" ng-model="procurement.description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-8">
+                            <a href="#/" class="btn-flat white pull-right">Назад</a>
+                            <button type="submit" ladda="loginLoading" ng-click="create()" ng-disabled="
+                        platform.customer.$error.required ||
+                        platform.id_procurement.$error.required ||
+                        platform.t_add_offers.$error.required ||
+                        platform.t_auction.$error.required ||
+                        platform.subjects_id.$error.required" class="btn-flat pull-right">+ Добавить Закупку</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

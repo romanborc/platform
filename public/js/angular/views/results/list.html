@@ -1,0 +1,146 @@
+<div class="content" datepicker>
+    <div id="pad-wrapper" class="result-list">
+        <div class="row head">
+            <div class="col-md-12">
+                <h4>Результаты</h4>
+            </div>
+        </div>
+        <div class="row filter-block result">
+            <a href="#/result/new" class="btn-flat success new-proc">Записать результат аукциона</a>
+            <div class="pull-right">
+                <div class="btn-group pull-right">
+                    <a class="btn-flat white filter" type="button" data-toggle="modal" data-target="#exampleModal">
+                    <span class="fa fa-filter"></span>
+                     Фильтры
+                </a>
+                    <a class="btn-flat info" type="button" ng-click="exportToExcel('#table1')">
+                    <span class="fa fa-share"></span>
+                     Export to Excel
+                </a>
+                </div>
+                <input type="text" class="search order-search" placeholder="Поиск.." ng-model="searchAll" />
+            </div>
+        </div>
+        <div class="row">
+            <table class="table table-bordered" id="table1">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">
+                            Идентификатор закупки
+                        </th>
+                        <th class="col-md-1">
+                            Менеджер
+                        </th>
+                        <th class="col-md-2">
+                            Дата результата
+                        </th>
+                        <th class="col-md-1">
+                            Окончательная сумма аукциона
+                        </th>
+                        <th class="col-md-1">
+                            Статус
+                        </th>
+                        <th class="col-md-1">
+                            Участник
+                        </th>
+                        <th class="col-md-4">
+                            Участники
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- row -->
+                    <tr class="first" ng-repeat="result in results | filter:searchAll">
+                        <td>
+                            <a href="#/result/edit/[[ result.id ]]">[[ result.procurements.id_procurement ]]</a>
+                        </td>
+                        <td>
+                            [[ result.users.name ]]
+                        </td>
+                        <td>
+                            [[ result.updated_at | dateFormat ]]
+                        </td>
+                        <td>
+                            [[ result.amount.toFixed(2) | numberFormat ]]
+                        </td>
+                        <td>
+                            <span ng-class="{statuses_danger: result.status_winners_id == '2', statuses_succes: result.status_winners_id == '1'}">[[ result.status_winners.status ]]</span>
+                        </td>
+                        <td>
+                            [[ result.participants.name ]]
+                        </td>
+                        <td>
+                            [[ result.results ]]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Фильтровать</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4">
+                        Менеджеры
+                    </div>
+                    <div class="col-sm-8">
+                        <select name="users_id" id="users_id" ng-model="filter.users_id" class="form-control" ng-options="user.id as user.name for user in users">
+                            <option value="" disabled>Выбери менеджера</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        Статус
+                    </div>
+                    <div class="col-sm-8">
+                        <select name="status_winners_id" id="status_winners" ng-model="filter.status_winners_id" class="form-control" ng-options="item.id as item.status for item in status_winners">
+                            <option value="" disabled>Выбери статус закупки</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        Участник
+                    </div>
+                    <div class="col-sm-8">
+                        <select name="participants_id" id="participants" ng-model="filter.participants_id" class="form-control" ng-options="item.id as item.name for item in participants">
+                            <option value="" disabled>Выбери тип закупки</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        Дата Результата
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control input-datepicker" ng-model="filter.updated_at" datepicker name="updated_at" placeholder="Выбери дату">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn-flat inverse filter-block" type="button" data-dismiss="modal"><span class="fa fa-caret-up"></span>Свернуть</a>
+                <a class="btn-flat danger filter-block" type="button" ng-click="clear(this)"><span class="fa fa-trash"></span>Очистить</a>
+                <a class="btn-flat primary filter-block" type="button" ng-click="search(evet)" data-dismiss="modal"><span class="fa fa-search"></span>Поиск</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('.input-datepicker').datepicker({
+    format: "yyyy-mm-dd",
+    language: "ru",
+    orientation: "bottom auto",
+    autoclose: true,
+    todayHighlight: true
+});
+</script>

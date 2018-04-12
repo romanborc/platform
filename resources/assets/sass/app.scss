@@ -1,0 +1,24 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+
+// Variables
+@import "variables";
+
+// Bootstrap
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/font-awesome/scss/font-awesome";
+
+// Style
+@import "auth/singin";
+@import "auth/singup";
+@import "layouts";
+@import "index";
+@import "ui-elements";
+@import "elements";
+@import "bootstrap-overrides";
+@import "update-procurement";
+@import "new-procurement";
+@import "users-list";
+@import "user-profile";
+@import "result-table";

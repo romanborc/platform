@@ -1,0 +1,83 @@
+<div class="content">
+    <div id="pad-wrapper" class="users-profile">
+        <div class="row header-list">
+            <h3>Статистика по менеджерам</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12 chart">
+                <h5></h5>
+                <div id="hero-bar" style="height: 300px;"></div>
+            </div>
+        </div>
+        <!-- Users table -->
+        <div class="row header-list">
+            <h3>Менеджеры</h3>
+            <div class="row filter-block">
+                <div class="col-md-8 col-md-offset-10">                    
+                    <a href="#/procurement/new" class="btn-flat success new-proc">+ Добавить закупку</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3 sortable">
+                                Имя менеджера
+                            </th>
+                            <th class="col-md-1 sortable">
+                                Регион
+                            </th>
+                            <th class="col-md-2 sortable">
+                                Начало работы на площадке
+                            </th>
+                            <th class="col-md-1 sortable">
+                                Всего закупок
+                            </th>
+                            <th class="col-md-1 sortable">
+                                Всего готовых
+                            </th>
+                            <th class="col-md-2 sortable">
+                                Всего выигранных
+                            </th>
+                            <th class="col-md-2 sortable">
+                                Выиграл на сумму
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- row -->
+                        <tr class="first" ng-repeat="user in users.users track by $index">
+                            <td>
+                                <img src="img/img-profile/manager-male.png" alt="contact" class="avatar img-circle" />
+                                <a href="#/user/edit/[[user.id]]" class="name">[[ user.name ]]</a>
+                                <span class="subtext">[[ user.positions.position ]]</span>
+                            </td>
+                            <td>
+                                [[ user.regions.city ]]
+                            </td>
+                            <td>
+                                [[ user.created_at ]]
+                            </td>
+                            <td class="align-right">
+                                [[ users.countProc[$index].count ]]
+                            </td>
+                            <td>
+                                [[ users.countDoneProc[$index].count ]] 
+                            </td>
+                            <td>
+                                [[ users.countWinProc[$index].count ]]
+                            </td>
+                            <td>
+                                [[ users.sumWinProc[$index].sum.toFixed(2) | numberFormat ]]
+                            </td>
+
+                        </tr>
+                        <!-- row -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

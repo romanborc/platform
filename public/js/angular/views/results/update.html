@@ -1,0 +1,113 @@
+<div class="content">
+    <div id="pad-wrapper" class="one-result">
+        <div class="row">
+            <a href="#/" class="btn-flat inverse pull-right delete-procurements" ng-click="delete(procurement.id)">
+            Удалить закупку
+        </a>
+            <a class="btn-flat success pull-right edit" ng-click="enableEditor()">
+            Редактировать закупку
+        </a>
+        </div>
+        <div class="row procurements">
+            <div class="col-md-12">
+                <div class="procurements-box">
+                    <div class="col-md-12 sections">
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="id_procurement" class="col-md-5 control-label">Номер закупки</label>
+                            <p ng-model="editIdProcurements">[[ result.procurements.id_procurement ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="results" class="col-md-5 control-label">Участники</label>
+                            <p ng-model="editResults">[[ result.results ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="amount" class="col-md-5 control-label">Окончательная сумма аукциона</label>
+                            <p ng-model="editAmount">[[ result.amount.toFixed(2) ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="users_id" class="col-md-5 control-label">Ответственный Менеджер</label>
+                            <p ng-model="editUsers">[[ result.users.name ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="subject" class="col-md-5 control-label">Статус</label>
+                            <p ng-model="editStatus">[[ result.status_winners.status ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="participants" class="col-md-5 control-label">Участник</label>
+                            <p ng-model="editParticipants">[[ result.participants.name ]]</p>
+                        </div>
+                        <div class="row form-wrapper" ng-show="editorEnabled" novalidate>
+                            <div class="col-md-12 with-sidebar">
+                                <form class="form-horizontal" name="platform">
+                                    <div class="form-group">
+                                        <label for="customer" class="col-md-2 control-label">Заказчик</label>
+                                        <div class="col-md-7">
+                                            <ui-select ng-model="result.procurements_id" on-select="onSelectCallback($item, $model)" name="procurements_id">
+                                                <ui-select-match placeholder="Выберите номер закупки в списке или найдите номер / заказчик...">[[ $select.selected.id_procurement ]]</ui-select-match>
+                                                <ui-select-choices repeat="item.id as item in procurements | filter: $select.search | limitTo: 10">
+                                                    <div ng-bind-html="item.id_procurement | highlight: $select.search"></div>
+                                                    <small>
+                                                            Заказчик: [[ item.customer ]] 
+                                                        </small>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="results" class="col-md-2 control-label">Участники</label>
+                                        <div class="col-md-7">
+                                            <textarea class="form-control" name="results" ng-model="result.results" id="results" placeholder="Участники и их оконочательная сумма"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amount" class="col-md-2 control-label ">Окончательная сумма аукциона</label>
+                                        <div class="col-md-7">
+                                            <input name="amount" type="number" class="form-control" id="amount" placeholder="Окончательная сумма аукциона" ng-model="result.amount ">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="users_id " class="col-md-2 control-label ">Ответственный Менеджер</label>
+                                        <div class="col-md-7">
+                                            <select name="users_id " id="users_id " class="form-control " ng-model="result.users_id " ng-options="item.id as item.name for item in users">
+                                                <option value="" label="Выбери Менеджера... " disabled selected="selected"></option>
+                                            </select>
+                                            <p class="form-error " ng-show="platform.users_id.$error.required ">Поле не должно быть пустым</p>
+                                            <div class="alert alert-danger " ng-show="response.errors.users_id[0] " ng-bind="response.errors.users_id[0] "></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="status_winners_id " class="col-md-2 control-label ">Статус</label>
+                                        <div class="col-md-7">
+                                            <select name="status_winners_id " id="status_winners_id " class="form-control " ng-model="result.status_winners_id" ng-options="item.id as item.status for item in status_winners">
+                                                <option value="" label="Выбери Менеджера... " disabled selected="selected"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="participants_id " class="col-md-2 control-label ">Участник</label>
+                                        <div class="col-md-7">
+                                            <select name="participants_id " id="participants_id " class="form-control " ng-model="result.participants_id" ng-options="item.id as item.name for item in participants">
+                                                <option value="" label="Выбери участника... " disabled selected="selected"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <a class="btn-flat inverse" href="#/results" ng-click="disableEditor()">Отмена</a>
+                                            <button type="submit" ng-click="update()" ng-disabled="
+                                                        platform.customer.$error.required ||
+                                                        platform.id_procurement.$error.required ||
+                                                        platform.offers_period_end.$error.required ||
+                                                        platform.auction_period_end.$error.required ||
+                                                        platform.subjects_id.$error.required" class="btn-flat success">Изменить</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

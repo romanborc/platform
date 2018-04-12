@@ -1,0 +1,100 @@
+<div class="content">
+    <div id="pad-wrapper" class="one-procurement">
+        <div class="row">
+            <div class="col-md-8">
+                <img src="img/img-profile/manager-male.png" alt="contact" class="avatar img-circle" />
+                <h3 class="name">[[ user.name ]]</h3>
+                <span class="area">[[ user.positions.position ]]</span>
+            </div>
+            <a class="btn-flat success pull-right edit" ng-click="enableEditor()">
+                Редактировать пользователя
+        </a>
+        </div>
+        <div class="row procurements">
+            <div class="col-md-8 info">
+                <div class="procurements-box">
+                    <div class="col-md-12 sections">
+                        <h6 ng-hide="editorEnabled">Информация о Менеджере</h6>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="customer" class="col-md-5 control-label">Имя</label>
+                            <p ng-model="editCustomer">[[ user.name ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="id_procurement" class="col-md-5 control-label">Фамилия</label>
+                            <p ng-model="editIdProcurements">[[ user.lastname ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="offers_priod_end" class="col-md-5 control-label">Email</label>
+                            <p ng-model="editOffersPeroidEnd">[[ user.email ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="auction_period_end" class="col-md-5 control-label">Должность</label>
+                            <p ng-model="editAuctionPeriodEnd">[[ user.positions.position ]]</p>
+                        </div>
+                        <div class="col-md-10" ng-hide="editorEnabled">
+                            <label for="amount" class="col-md-5 control-label">Регион</label>
+                            <p ng-model="editAmount">[[ user.regions.city ]]</p>
+                        </div>
+                        <div class="row form-wrapper" ng-show="editorEnabled" novalidate>
+                            <div class="col-md-12 with-sidebar">
+                                <form class="form-horizontal" name="platform">
+                                    <div class="form-group">
+                                        <label for="name" class="col-md-2 control-label">Имя</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control update-proc" name="name" id="name" placeholder="Имя" ng-model="user.name" ng-show="editorEnabled" required>
+                                            <p class="form-error" ng-show="platform.name.$error.required">Введи Имя</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="lastname" class="col-md-2 control-label">Фамилия</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="lastname" id="lastname" ng-model="user.lastname" placeholder="Фамилия" required>
+                                            <p class="form-error" ng-show="platform.lastname.$error.required">Поле не должно быть пустым</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="col-md-2 control-label">Email</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" name="email" id="email" ng-model="user.email" placeholder="Email" required>
+                                            <p class="form-error" ng-show="platform.email.$error.required">Поле не должно быть пустым</p>
+                                            <div class="alert alert-danger" ng-show="response.errors.email[0]" ng-bind="response.errors.email[0]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="positions" class="col-md-2 control-label">Должность</label>
+                                        <div class="col-md-8">
+                                            <select name="positions" id="positions" class="form-control" ng-model="user.positions_id" ng-options="position.id as position.position for position in positions">
+                                                <option value="" label="Выбери Должность..." selected="selected"></option>
+                                            </select>
+                                            <p class="form-error" ng-show="platform.positions.$error.required">Поле не должно быть пустым</p>
+                                            <div class="alert alert-danger" ng-show="response.errors.positions[0]" ng-bind="response.errors.positions[0]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="regions" class="col-md-2 control-label">Регион</label>
+                                        <div class="col-md-8">
+                                            <select name="regions" id="regions" class="form-control" ng-model="user.regions_id" ng-options="region.id as region.city for region in regions">
+                                                <option value="" label="Выбери Регион..." selected="selected"></option>
+                                            </select>
+                                            <p class="form-error" ng-show="platform.regions.$error.required">Выбери Регион</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <a class="btn-flat inverse" href="#/user/edit/[[ user.id ]]" ng-click="disableEditor()">Отмена</a>
+                                            <button type="submit" ng-click="update()" ng-disabled="
+                                                        platform.customer.$error.required ||
+                                                        platform.id_procurement.$error.required ||
+                                                        platform.offers_period_end.$error.required ||
+                                                        platform.auction_period_end.$error.required ||
+                                                        platform.subjects_id.$error.required" class="btn-flat success">Изменить</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>

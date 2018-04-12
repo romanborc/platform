@@ -1,0 +1,229 @@
+<header class="navbar navbar-inverse" role="banner" notification>
+    <div class="navbar-header" id="navbar-header">
+        <button class="navbar-toggle" type="button" data-toggle="collapse" id="menu-toggler">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+            Platform
+        </a>
+    </div>
+    <ul class="nav navbar-nav pull-right hidden-xs">
+        <li class="notification-dropdown hidden-xs hidden-sm">
+            <a class="trigger">
+                <i class="fa fa-exclamation-triangle"></i>
+                <span class="count">[[ countProcToDay ]]</span>
+            </a>
+            <div class="pop-dialog">
+                <div class="pointer right">
+                    <div class="arrow"></div>
+                    <div class="arrow_border"></div>
+                </div>
+                <div class="body">
+                    <div class="notifications">
+                        <h3>Сегодня будет [[ countProcToDay ]] аукциона</h3>
+                        <a href="#/procurement/edit/[[ procurement.id ]]" class="item" ng-repeat="procurement in procListToDay">
+                            <i class="fa fa-angle-right"></i> [[ procurement.id_procurement ]]
+                            <span class="time"><i class="fa fa-clock-o"></i> [[ procurement.auction_period_end | eventDuration ]]</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</header>
+<div class="content">
+    <div id="main-stats">
+        <div class="row stats-row">
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">[[ countAllProc ]]</span> Всего Закупок
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">[[ countWinProc ]]</span> Выигранных
+                </div>
+                <span class="date">[[ currentMonth ]]</span>
+            </div>
+            <div class="col-md-3 col-sm-3 stat">
+                <div class="data">
+                    <span class="number">[[ countFalseProc ]]</span> Проигранных
+                </div>
+                <span class="date">[[ currentMonth ]]</span>
+            </div>
+            <div class="col-md-3 col-sm-3 stat last">
+                <div class="data">
+                    <span class="number">[[ sumPerMonth.toFixed(2) ]]</span> Сумма выиграных
+                </div>
+                <span class="date">[[ currentMonth ]]</span>
+            </div>
+        </div>
+    </div>
+    <div id="pad-wrapper" class="datatables-page">
+        <div class="row table-proc">
+            <div class="row head">
+                <div class="col-md-12">
+                    <h4>Закупки</h4>
+                </div>
+            </div>
+            <div class="row filter-block">
+                <div class="col-md-8 col-md-offset-5">
+                    <span class="fa fa-search"></span>
+                    <input type="text" class="search" placeholder="Поиск..." ng-model="searchAll" ng-change="filter()">
+                    <a href="#/procurement/new" class="btn-flat new-proc">+ Добавить закупку</a>
+                    <a class="btn-flat white filter" type="button" data-toggle="modal" data-target="#exampleModal">
+                    <span class="fa fa-filter"></span>
+                     Фильтры
+                </a>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <table id="example" class="table table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th class="col-md-3" tabindex="0" rowspan="1" colspan="1">Идентификатор закупки</th>
+                            <th class="col-md-2" tabindex="0" rowspan="1" colspan="1">Ожидаемая стоимость</th>
+                            <th class="col-md-2" tabindex="0" rowspan="1" colspan="1">Важные даты</th>
+                            <th class="col-md-3" tabindex="0" rowspan="1" colspan="1">Статус</th>
+                            <th class="col-md-2" tabindex="0" rowspan="1" colspan="1">Примечания</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th rowspan="1" colspan="1">Идентификатор закупки</th>
+                            <th rowspan="1" colspan="1">Ожидаемая стоимость</th>
+                            <th rowspan="1" colspan="1">Важные даты</th>
+                            <th rowspan="1" colspan="1">Статус</th>
+                            <th tabindex="0" rowspan="1" colspan="1">Примечания</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr ng-repeat="procurement in procurements | filter:searchAll | data:(current_grid-1)*data_limit | limitTo:data_limit"> 
+                            <td>
+                                <a href="#/procurement/edit/[[ procurement.id ]]" class="subject">[[ procurement.subjects.subject ]]</a>
+                                <div class="type">
+                                    <a href="https://zakupki.prom.ua/gov/tenders/[[ procurement.id_procurement ]]" target="_blank">
+                                        <p class="id_procurement">[[ procurement.id_procurement ]]</p>
+                                    </a>
+                                </div>
+                                <p class="customer">[[ procurement.customer ]]</p>
+                                <p class="label label-info">[[ procurement.types.type ]] </p>
+                                <p class="label label-success">[[ procurement.users.name ]] </p>
+                            </td>
+                            <td>
+                                <p class="price">[[ procurement.amount.toFixed(2) | numberFormat ]]</p>
+                            </td>
+                            <td>
+                                Прием предложений до:
+                                <p class="date_status">[[ procurement.offers_period_end | dateFormat]]</p>
+                                Аукцион:
+                                <p class="date_status">[[ procurement.auction_period_end | dateFormat ]]</p>
+                            </td>
+                            <td>
+                                <p id="status" ng-class="{statuses_danger: procurement.statuses_id == '3', statuses_succes: procurement.statuses_id == '2', statuses_process: procurement.statuses_id == '1'}">[[ procurement.statuses.status ]]</p>
+                                Осталось до приема предложений:
+                                <p class="date_status">[[ procurement.offers_period_end | eventDuration ]]</p>
+                                Осталось до аукцион:
+                                <p class="date_status">[[ procurement.auction_period_end | eventDuration ]]</p>
+                            </td>
+                            <td>[[ procurement.description ]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12" ng-show="filter_data > 0">
+                    <ul uib-pagination ng-model="current_grid" on-select-page="page_position(page)" boundary-links="true" total-items="filter_data" items-per-page="data_limit" class="pagination-small pull-right" first-text="&laquo;" last-text="&raquo;">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h5 class="modal-title" id="exampleModalLabel">Фильтровать</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Менеджеры
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="users_id" id="users_id" ng-model="filter.users_id" class="form-control" ng-options="user.id as user.name for user in users">
+                                <option value="" disabled>Выбери менеджера</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Статус
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="statuses_id" id="statuses_id" ng-model="filter.statuses_id" class="form-control" ng-options="status.id as status.status for status in statuses">
+                                <option value="" disabled>Выбери статус закупки</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Тип процедуры
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="types_id" id="types_id" ng-model="filter.types_id" class="form-control" ng-options="type.id as type.type for type in types">
+                                <option value="" disabled>Выбери тип закупки</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Предмет закупки
+                        </div>
+                        <div class="col-sm-8">
+                            <select name="subjects_id" id="subjects_id" ng-model="filter.subjects_id" class="form-control" ng-options="sub.id as sub.subject for sub in subjects">
+                                <option value="" disabled>Выбери предмет закупки</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Завершение приема предложений
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control input-datepicker" ng-model="filter.offers_period_end" datepicker name="offers_period_end" placeholder="Выбери дату завершения приема">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            Дата начала аукциона
+                        </div>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control input-datepicker" ng-model="filter.auction_period_end" datepicker name="auction_period_end" placeholder="Выбери дату аукциона">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn-flat inverse filter-block" type="button" data-dismiss="modal"><span class="fa fa-caret-up"></span>Свернуть</a>
+                    <a class="btn-flat danger filter-block" type="button" ng-click="clear(this)"><span class="fa fa-trash"></span>Очистить</a>
+                    <a class="btn-flat primary filter-block" type="button" ng-click="search(evet)" data-dismiss="modal"><span class="fa fa-search"></span>Поиск</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('.input-datepicker').datepicker({
+    format: "yyyy-mm-dd",
+    language: "ru",
+    orientation: "bottom auto",
+    autoclose: true,
+    todayHighlight: true
+});
+</script>

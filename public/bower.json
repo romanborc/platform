@@ -1,0 +1,30 @@
+{
+  "name": "platform",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.9",
+    "angular-bootstrap": "^2.5.0",
+    "angular-route": "^1.6.9",
+    "angular-sanitize": "^1.6.9",
+    "jquery": "^3.3.1",
+    "bootstrap-datepicker": "^1.7.1",
+    "moment-duration-format": "^2.2.2",
+    "moment": "^2.20.1",
+    "angular-resource": "^1.6.9",
+    "alertifyjs": "^1.0.11",
+    "angular-ui-mask": "^1.8.7",
+    "angular-ui-select": "^0.19.8",
+    "raphael": "^2.2.7",
+    "morris.js": "^0.5.1"
+  }
+}

@@ -1,0 +1,172 @@
+<div class="content">
+    <div id="pad-wrapper" class="one-procurement">
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="name"><a href="https://zakupki.prom.ua/gov/tenders/[[ procurement.id_procurement ]]" target="_blank" ng-model="editIdProcurements">[[ procurement.id_procurement ]]</a></h3>
+                <p class="area">[[ procurement.customer ]]</p>
+            </div>
+            <a href="#/" class="btn-flat inverse pull-right delete-procurements" ng-click="delete(procurement.id)">
+            Удалить закупку
+        </a>
+            <a class="btn-flat success pull-right edit" ng-click="enableEditor()">
+            Редактировать закупку
+        </a>
+        </div>
+        <div class="row procurements">
+            <div class="col-md-8 info">
+                <div class="procurements-box">
+                    <div class="col-md-12 sections">
+                        <h6 ng-hide="editorEnabled">Информация о Закупке</h6>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="customer" class="col-md-5 control-label">Заказчик</label>
+                                <p ng-model="editCustomer">[[ procurement.customer ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="id_procurement" class="col-md-5 control-label">Номер закупки</label>
+                            <p ng-model="editIdProcurements">[[ procurement.id_procurement ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="offers_priod_end" class="col-md-5 control-label">Подать до</label>
+                            <p ng-model="editOffersPeroidEnd">[[ procurement.offers_period_end ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="auction_period_end" class="col-md-5 control-label">Время Аукциона</label>
+                            <p ng-model="editAuctionPeriodEnd">[[ procurement.auction_period_end ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="amount" class="col-md-5 control-label">Ожидаемая стоимость</label>
+                            <p ng-model="editAmount">[[ procurement.amount.toFixed(2) ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="users_id" class="col-md-5 control-label">Ответственный Менеджер</label>
+                            <p ng-model="editUsers">[[ procurement.users.name ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="subject" class="col-md-5 control-label">Предмет Закупки</label>
+                            <p ng-model="editSubject">[[ procurement.subjects.subject ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="identifier" class="col-md-5 control-label">Код ЕДРПО</label>
+                            <p>[[ procurement.identifier ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="status" class="col-md-5 control-label">Статус выполнения</label>
+                            <p id="status">[[ procurement.statuses.status ]]</p>
+                        </div>
+                        <div class="col-md-12" ng-hide="editorEnabled">
+                            <label for="description" class="col-md-5 control-label">Описание</label>
+                            <p>[[ procurement.description ]]</p>
+                        </div>
+                        <div class="row form-wrapper" ng-show="editorEnabled" novalidate>
+                            <div class="col-md-12 with-sidebar">
+                                <form class="form-horizontal" name="platform">
+                                    <div class="form-group">
+                                        <label for="customer" class="col-md-2 control-label">Заказчик</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control update-proc" name="customer" id="customer" placeholder="Заказчик" ng-model="procurement.customer" ng-show="editorEnabled" required>
+                                            <p class="form-error" ng-show="platform.customer.$error.required">Введи Заказчика</p>
+                                            <span class="help-inline" ng-show="response.errors.customer[0]" ng-bind="response.errors.customer[0]"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="id_procurement" class="col-md-2 control-label">Номер Закупки</label>
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control update-proc" name="id_procurement" id="id_procurement" ng-model="procurement.id_procurement" ui-mask="AA-9999-99-99-999999-A" model-view-value="true" ui-mask-placeholder-char="_" required>
+                                            <p class="form-error" ng-show="platform.id_procurement.$error.required">Поле не должно быть пустым</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="offers_period_end" class="col-md-2 control-label">Подать до</label>
+                                        <div class="col-md-8">
+                                            <input type="datetime" class="form-control update-proc" name="offers_period_end" id="offers_period_end" ng-model="procurement.offers_period_end" ui-mask="9999-99-99 99:99" ui-mask-placeholder-char="-" placeholder="YYYY-MM-DD HH:MM" required>
+                                            <p class="form-error" ng-show="platform.offers_period_end.$error.required">Поле не должно быть пустым</p>
+                                            <div class="alert alert-danger" ng-show="response.errors.offers_period_end[0]" ng-bind="response.errors.offers_period_end[0]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="auction_period_end" class="col-md-2 control-label">Время аукциона</label>
+                                        <div class="col-md-8">
+                                            <input type="datetime" class="form-control update-proc" name="auction_period_end" id="auction_period_end" ng-model="procurement.auction_period_end" ui-mask="9999-99-99 99:99" ui-mask-placeholder-char="-" placeholder="YYYY-MM-DD HH:MM" required>
+                                            <p class="form-error" ng-show="platform.auction_period_end.$error.required">Поле не должно быть пустым</p>
+                                            <div class="alert alert-danger" ng-show="response.errors.auction_period_end[0]" ng-bind="response.errors.auction_period_end[0]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="amount" class="col-md-2 control-label">Ожидаемая стоимость</label>
+                                        <div class="col-md-8">
+                                            <input type="number" step="any" class="form-control update-proc" name="amount" id="amount" ng-model="procurement.amount" placeholder="Ожидаемая стоимость" required>
+                                            <p class="form-error" ng-show="platform.amount.$error.required">Введи сумму Аукциона</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="users_id" class="col-md-2 control-label">Ответственный Менеджер</label>
+                                        <div class="col-md-8">
+                                            <select name="users_id" id="users_id" class="form-control update-proc" ng-model="procurement.users_id" ng-options="user.id as user.name for user in users">
+                                                <option value="" label="Выбери Менеджера..." selected="selected"></option>
+                                            </select>
+                                            <p class="form-error" ng-show="platform.users_id.$error.required">Выбери Менеджера</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subjects_id" class="col-md-2 control-label">Предмет Закупки</label>
+                                        <div class="col-md-8">
+                                            <select name="subjects_id" id="subjects_id" class="form-control update-proc" required ng-model="procurement.subjects_id" ng-options="sub.id as sub.subject for sub in subjects">
+                                            </select>
+                                            <p class="form-error" ng-show="platform.subjects_id.$error.required">Выбери предмет Закупки</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subjects_id" class="col-md-2 control-label">Статус выполнения</label>
+                                        <div class="col-md-8">
+                                            <select name="statuses_id" id="statuses_id" class="form-control update-proc" required ng-model="procurement.statuses_id" ng-options="status.id as status.status for status in statuses">
+                                            </select>
+                                            <p class="form-error" ng-show="platform.subjects_id.$error.required">Выбери предмет Закупки</p>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subjects_id" class="col-md-2 control-label">Описание</label>
+                                        <div class="col-md-8">
+                                            <textarea name="description" ng-model="procurement.description" id="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-8">
+                                            <a class="btn-flat inverse" href="#/procurement/edit/[[ procurement.id ]]" ng-click="disableEditor()">Отмена</a>
+                                            <button type="submit" ng-click="update()" ng-disabled="
+                                                        platform.customer.$error.required ||
+                                                        platform.id_procurement.$error.required ||
+                                                        platform.offers_period_end.$error.required ||
+                                                        platform.auction_period_end.$error.required ||
+                                                        platform.subjects_id.$error.required" class="btn-flat success">Изменить</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-12 history pull-right">
+                <h6>Статистика по Заказчику</h6>
+                <div class="form-group">
+                    <label for="customer" class="col-md-8 control-label">Всего проведено тендеров</label>
+                    <div class="col-md-4">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customer" class="col-md-8 control-label">Всего выиграных тендеров</label>
+                    <div class="col-md-4">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customer" class="col-md-8 control-label">Всего проиграных тендеров</label>
+                    <div class="col-md-4">
+                        <p></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

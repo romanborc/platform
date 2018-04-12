@@ -1,0 +1,79 @@
+<div class="content">
+    <div id="pad-wrapper" class="new-proc">
+        <div class="row head">
+            <div class="col-md-12">
+                <h3>Записать результат аукциона</h3>
+            </div>
+        </div>
+        <div class="row form-wrapper">
+            <div class="col-md-9 with-sidebar">
+                <form class="form-horizontal" name="platform">
+                    <div class="form-group">
+                        <label for="subjects_id" class="col-md-2 control-label">Номер Закупки</label>
+                        <div class="col-md-7 ">
+                            <ui-select ng-model="result.procurements_id" on-select="onSelectCallback($item, $model)" name="procurements_id" >
+                                <ui-select-match placeholder="Выберите номер закупки в списке или найдите номер / заказчик...">[[ $select.selected.id_procurement ]]</ui-select-match>
+                                <ui-select-choices repeat="item as item in procurements | filter: $select.search | limitTo: 10">
+                                    <div ng-bind-html="item.id_procurement | highlight: $select.search"></div>
+                                        <small>
+                                            Заказчик: [[ item.customer ]] 
+                                     </small>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="alert alert-danger" ng-show="response.errors.procurements_id[0]" ng-bind="response.errors.procurements_id[0]"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="results" class="col-md-2 control-label">Участники</label>
+                        <div class="col-md-7">
+                            <textarea class="form-control" name="results" ng-model="result.results" id="results" placeholder="Участники и их оконочательная сумма"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount" class="col-md-2 control-label ">Окончательная сумма аукциона</label>
+                        <div class="col-md-7">
+                            <input name="amount" type="number" class="form-control" id="amount" placeholder="Окончательная сумма аукциона" ng-model="result.amount ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="users_id " class="col-md-2 control-label ">Ответственный Менеджер</label>
+                        <div class="col-md-7">
+                            <select name="users_id " id="users_id " class="form-control " ng-model="result.users_id ">
+                                <option value="" label="Выбери Менеджера... " disabled selected="selected"></option>
+                                <option ng-repeat="item in users " value="[[ item.id ]] ">[[ item.name ]]</option>
+                            </select>
+                            <p class="form-error " ng-show="platform.users_id.$error.required ">Поле не должно быть пустым</p>
+                            <div class="alert alert-danger " ng-show="response.errors.users_id[0] " ng-bind="response.errors.users_id[0] "></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="status_winners_id " class="col-md-2 control-label ">Статус</label>
+                        <div class="col-md-7">
+                            <select name="status_winners_id " id="status_winners_id " class="form-control " ng-model="result.status_winners_id ">
+                                <option value="" label="Выбери Менеджера... " disabled selected="selected"></option>
+                                <option ng-repeat="item in status_winners " value="[[ item.id ]] ">[[ item.status ]]</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="participants_id " class="col-md-2 control-label ">Участник</label>
+                        <div class="col-md-7">
+                            <select name="participants_id " id="participants_id " class="form-control " ng-model="result.participants_id ">
+                                <option value="" label="Выбери участника... " disabled selected="selected"></option>
+                                <option ng-repeat="item in participants " value="[[ item.id ]] ">[[ item.name ]]</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-offset-2 col-md-8 ">
+                            <a href="#/results " class="btn-flat white pull-right" >Назад</a>
+                            <button type="submit " ng-click="create() " class="btn-flat pull-right" ng-disabled="
+                        platform.procurements_id.$error.required">Записать результат</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
